@@ -16,8 +16,10 @@ func (p *Project) Register(router *gin.RouterGroup) {
 
 // 获取列表
 func (*Project) list(c *gin.Context) {
+
 	projects := &[]model.Project{}
-	service.Project.SqlSession.Find(projects)
+	service.Project.List(projects)
+
 	c.JSON(200, projects)
 }
 

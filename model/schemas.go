@@ -2,7 +2,7 @@ package model
 
 import (
 	"github.com/willerhe/webbase/modeler"
-	"github.com/willerhe/webbase/servicer"
+	"github.com/willerhe/webbase/orm"
 	"time"
 )
 
@@ -35,6 +35,6 @@ type (
 )
 
 func Sync() {
-	sync := servicer.NewService()
+	sync := orm.NewService()
 	sync.SqlSession.AutoMigrate(new(Project), new(Task), new(Story))
 }
