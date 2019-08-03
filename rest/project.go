@@ -6,19 +6,21 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func RegisterProjectAPI(r *gin.RouterGroup) {
-	p := r.Group("")
-	p.GET("/projects", list)
-	p.GET("/project/:id", get)
+type Project int
+
+func (p *Project) Register(router *gin.RouterGroup) {
+	r := router.Group("")
+	r.GET("/projects", p.list)
+	r.GET("/project/:id", p.get)
 }
 
 // 获取列表
-func list(c *gin.Context) {
+func (*Project) list(c *gin.Context) {
 	projects := &[]model.Project{}
 	service.Project.SqlSession.Find(projects)
 	c.JSON(200, projects)
 }
 
 // 获取单个
-func get(c *gin.Context) {
+func (*Project) get(c *gin.Context) {
 }

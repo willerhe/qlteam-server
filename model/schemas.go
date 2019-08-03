@@ -1,15 +1,15 @@
 package model
 
 import (
-	"github.com/willerhe/webbase/app"
-	"github.com/willerhe/webbase/model"
+	"github.com/willerhe/webbase/modeler"
+	"github.com/willerhe/webbase/servicer"
 	"time"
 )
 
 type (
 	// xp 不需要branch
 	Project struct {
-		model.Base
+		modeler.Base
 		Name     string `json:"name"`    // 项目名称
 		Describe string `json:"content"` // 项目描述
 	}
@@ -18,7 +18,7 @@ type (
 	// 1 作为开发人员，我可以随时查看自己的收件箱有没有邮件，以便能够及时收到领导的任务分配
 	// 2 作为项目经理，我可以把用户故事分配给每个开发人员，以便能够按时完成用户需求
 	Task struct {
-		model.Base
+		modeler.Base
 		Name     string    `json:"name"`
 		Describe string    `json:"describe"`
 		DeadLine time.Time `json:"deadLine"` // 最后期限
@@ -29,12 +29,12 @@ type (
 
 	// 用户故事简单到没有名称 直接是一段对开发工作和用户价值对应关系的描述
 	Story struct {
-		model.Base
+		modeler.Base
 		Describe string `json:"describe"`
 	}
 )
 
 func Sync() {
-	sync := app.NewService()
+	sync := servicer.NewService()
 	sync.SqlSession.AutoMigrate(new(Project), new(Task), new(Story))
 }

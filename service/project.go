@@ -1,5 +1,7 @@
 package service
 
-import "github.com/willerhe/webbase/app"
+import (
+	"github.com/willerhe/webbase/servicer"
+)
 
-var Project = app.NewService()
+var Project = servicer.NewService()
