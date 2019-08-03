@@ -5,14 +5,11 @@ import (
 	"github.com/willerhe/webbase/orm"
 )
 
-// 组织模块
-type project int
-
 // 对外使用
 var Project project
 
-var db = orm.NewService()
+type project int
 
-func (p *project) List(projects *[]model.Project) {
-	db.SqlSession.Find(projects)
+func (project) List(projects *[]model.Project) {
+	orm.DB.SqlSession.Find(projects)
 }

@@ -9,15 +9,13 @@ import (
 
 func main() {
 	app := apper.New()
-
 	defer app.Start()
-
 	// 迁移模型
 	model.Sync()
-
 	// 挂在路由
-	api := app.RouterGroup.Group("api")
+	api := app.Group("api")
 
 	router.Register(api, new(rest.Project)) // 项目api
+	router.Register(api, new(rest.Story))   // 用户故事api
 
 }

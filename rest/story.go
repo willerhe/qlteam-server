@@ -1,15 +1,21 @@
 package rest
 
-import "github.com/gin-gonic/gin"
+import (
+	"code.qlteam.com/model"
+	"code.qlteam.com/service"
+	"github.com/gin-gonic/gin"
+)
 
 type Story int
 
-func (s *Story) get(c *gin.Context) {
-
+func (Story) list(c *gin.Context) {
+	stories := &[]model.Story{}
+	service.Story.List(stories)
+	c.JSON(200, stories)
 }
 
-func (s *Story) RegisterStory(r *gin.RouterGroup) {
+func (s *Story) Register(r *gin.RouterGroup) {
 	st := r.Group("")
-	st.GET("/story/:id", s.get)
+	st.GET("/stories", s.list)
 
 }
