@@ -14,7 +14,7 @@ func (p *Project) Register(router *gin.RouterGroup) {
 	r.GET("/project/:id", p.get)
 }
 
-// 获取列表
+// get project's list
 func (*Project) list(c *gin.Context) {
 
 	projects := &[]model.Project{}
@@ -23,6 +23,6 @@ func (*Project) list(c *gin.Context) {
 	c.JSON(200, projects)
 }
 
-// 获取单个
+// get a project
 func (*Project) get(c *gin.Context) {
 }

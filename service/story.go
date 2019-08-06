@@ -20,10 +20,17 @@ func (story) Get(s *model.Story) {
 }
 
 // Save save new story
-func (story) Save(s *model.Story) {
-	orm.DB.SqlSession.Save(s)
+// todo 更细其他字段 不更新deleted_at字段
+func (story) Update(s *model.Story) {
+	orm.DB.SqlSession.Model(s).UpdateColumn("describe")
 }
 
-func (story) Delete(s model.Story) {
+// Delete delete story
+func (story) Delete(s *model.Story) {
 	orm.DB.SqlSession.Delete(s)
+}
+
+// Create create new story
+func (story) Create(s *model.Story) {
+	s = orm.DB.SqlSession.Create(s).Value.(*model.Story)
 }
