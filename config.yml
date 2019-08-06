@@ -1,6 +1,6 @@
 db:
   type: mysql
-  uri: "root:111111@/qlteam?charset=utf8&parseTime=True&loc=Local"
+  uri: "root:111111@tcp(65.49.219.122:3306)/qlteam?charset=utf8"
 
 app:
   port: 9900

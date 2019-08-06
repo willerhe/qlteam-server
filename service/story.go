@@ -9,6 +9,21 @@ var Story story
 
 type story int
 
-func (story) List(s *[]model.Story) {
-	orm.DB.SqlSession.Find(s)
+// List story list
+func (story) List(ss *[]model.Story) {
+	orm.DB.SqlSession.Find(ss)
+}
+
+// Get get single item
+func (story) Get(s *model.Story) {
+	orm.DB.SqlSession.First(s)
+}
+
+// Save save new story
+func (story) Save(s *model.Story) {
+	orm.DB.SqlSession.Save(s)
+}
+
+func (story) Delete(s model.Story) {
+	orm.DB.SqlSession.Delete(s)
 }
