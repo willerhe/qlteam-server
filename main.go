@@ -13,12 +13,19 @@ func main() {
 	defer app.Start()
 	// 迁移模型
 	model.Sync()
-	// 挂在路由
-	api := app.Group("api")
+	// 跟路由
+	root := &app.RouterGroup
+	// api 子路由
+	api := root.Group("api")
+
+	// 登录
+	router.Register(root, new(rest.Login))
+
 	api.Use(middleware.AllowCORS, middleware.MustLogged)
 
 	router.Register(api, new(rest.Project)) // 项目api
 	router.Register(api, new(rest.Story))   // 用户故事api
 	router.Register(api, new(rest.Task))    // 任务
+	router.Register(api, new(rest.Login))
 
 }

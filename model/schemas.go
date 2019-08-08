@@ -32,9 +32,17 @@ type (
 		modeler.Base
 		Describe string `json:"describe" form:"describe"`
 	}
+
+	// 用户
+	User struct {
+		modeler.Base
+		NickName string `json:"nickName" form:"nickName"`
+		Account  string `json:"account" form:"account"`
+		Password string `json:"-" form:"password"`
+	}
 )
 
 func Sync() {
 	sync := orm.NewService()
-	sync.SqlSession.AutoMigrate(new(Project), new(Task), new(Story))
+	sync.SqlSession.AutoMigrate(new(Project), new(Task), new(Story), new(User))
 }
