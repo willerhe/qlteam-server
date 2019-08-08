@@ -23,6 +23,7 @@ type (
 		Describe string    `json:"describe" form:"describe"`
 		DeadLine time.Time `json:"deadLine" form:"deadLine"` // 最后期限
 		Status   string    `json:"status" form:"status"`     // 任务状态 未开始  进行中 已完成
+		Group    string    `json:"group" form:"group"`       // 将相同性质的任务放在一组
 		Box      string    `json:"box" form:"box"`           // 在哪个箱子 收件箱 今天做  下一步做 以后再做
 		Remark   string    `json:"remark" form:"remark"`     // 备注
 	}
@@ -30,7 +31,8 @@ type (
 	// 用户故事简单到没有名称 直接是一段对开发工作和用户价值对应关系的描述
 	Story struct {
 		modeler.Base
-		Describe string `json:"describe" form:"describe"`
+		ProjectId int    `json:"projectId" form:"projectId"`
+		Describe  string `json:"describe" form:"describe"`
 	}
 
 	// 用户
