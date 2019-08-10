@@ -2,7 +2,7 @@ package middleware
 
 import "github.com/gin-gonic/gin"
 
-// 允许跨域
+// AllowCORS 跨域
 func AllowCORS(c *gin.Context) {
 	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
 	c.Writer.Header().Add("Access-Control-Allow-Headers", "Content-Type")
@@ -10,8 +10,13 @@ func AllowCORS(c *gin.Context) {
 	c.Next()
 }
 
-// 验证当前用户是否登录
+// MustLogged 必须登录
 func MustLogged(c *gin.Context) {
-	// todo 验证是否登录
+	uid, _ := c.Cookie("uid")
+	if uid == "" {
+		c.String(401, "请先登录！")
+		c.Abort()
+		return
+	}
 	c.Next()
 }

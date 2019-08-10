@@ -16,17 +16,17 @@ func main() {
 	// 跟路由
 	root := &app.RouterGroup
 	api := root.Group("api")
+
 	// api 子路由
 	v1 := api.Group("v1")
 
 	// 登录
-	router.Register(root, new(rest.Login))
-
-	v1.Use(middleware.AllowCORS, middleware.MustLogged)
-
-	router.Register(v1, new(rest.Project)) // 项目api
-	router.Register(v1, new(rest.Story))   // 用户故事api
-	router.Register(v1, new(rest.Task))    // 任务
 	router.Register(v1, new(rest.Login))
+
+	protect := v1.Group("")
+	protect.Use(middleware.AllowCORS, middleware.MustLogged)
+	router.Register(protect, new(rest.Project)) // 项目api
+	router.Register(protect, new(rest.Story))   // 用户故事api
+	router.Register(protect, new(rest.Task))    // 任务
 
 }
