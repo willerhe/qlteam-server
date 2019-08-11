@@ -14,23 +14,27 @@ type Login int
 
 // login 登录
 func (Login) login(c *gin.Context) {
-	account := c.Query("account")
-	password := c.Query("password")
-	// todo 实现remember me
-	hash := md5.New()
-	fmt.Println([]byte(password))
-	hash.Write([]byte(password))
-
-	user := &model.User{Account: account, Password: fmt.Sprintf("%X", hash.Sum(nil))}
-	has := orm.DB.SqlSession.Where(user).First(user).RowsAffected > 0
-	if !has {
-		c.String(401, "用户名或者密码错误")
+	u := &model.User{}
+	if err := c.Bind(u); err != nil {
+		c.String(400, "不支持的参数类型")
 		c.Abort()
 		return
 	}
-	// todo 验证用户是否合法
-	c.SetCookie("uid", fmt.Sprint("user.ID"), 30*24*60*60*60, "", "localhost", true, true)
-	c.String(200, "ok")
+	// todo 实现remember me
+	hash := md5.New()
+	hash.Write([]byte(u.Password))
+
+	user := &model.User{Account: u.Account, Password: fmt.Sprintf("%X", hash.Sum(nil))}
+	has := orm.DB.SqlSession.Where(user).First(user).RowsAffected > 0
+	if !has {
+		c.String(403, "用户名或者密码错误")
+		c.Abort()
+		return
+	}
+	// 生成jwt
+	c.Header("authorization", service.Token.General(*u))
+
+	c.JSON(200, user)
 }
 
 // register 注册
@@ -55,7 +59,6 @@ func (Login) register(c *gin.Context) {
 func (Login) logout(c *gin.Context) {
 	c.SetCookie("uid", "", -1, "", "localhost", true, true)
 	//todo  删除后台的用户记录
-
 	c.String(200, "ok")
 }
 

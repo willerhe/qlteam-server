@@ -3,6 +3,7 @@ module code.qlteam.com
 go 1.12
 
 require (
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gin-gonic/gin v1.3.0
 	github.com/willerhe/webbase v0.0.0-20190625231052-22029a293ec2
 )

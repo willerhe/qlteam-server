@@ -6,6 +6,5 @@ db:
 app:
   port: 9900
 
-
 token:
   sign: qlteam
