@@ -15,7 +15,7 @@ func main() {
 	model.Sync()
 	// 跟路由
 	root := &app.RouterGroup
-	root.Use(middleware.AllowCORS)
+	root.Use(middleware.AllowCORS())
 	api := root.Group("api")
 
 	// api 子路由
