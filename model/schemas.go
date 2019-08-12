@@ -42,6 +42,11 @@ type (
 		Account  string `json:"account" form:"account"`
 		Password string `json:"-" form:"password"`
 	}
+
+	// todo 定义token 结构
+	Token struct {
+		Token string
+	}
 )
 
 func Sync() {
