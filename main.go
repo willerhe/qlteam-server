@@ -10,12 +10,12 @@ import (
 
 func main() {
 	app := apper.New()
+	app.Use(middleware.AllowCORS())
 	defer app.Start()
 	// 迁移模型
 	model.Sync()
 	// 跟路由
 	root := &app.RouterGroup
-	root.Use(middleware.AllowCORS())
 	api := root.Group("api")
 
 	// api 子路由
@@ -25,7 +25,8 @@ func main() {
 	router.Register(v1, new(rest.Login))
 
 	protect := v1.Group("")
-	protect.Use(middleware.MustLogged)
+	protect.Use(middleware.AllowCORS(), middleware.MustLogged)
+
 	router.Register(protect, new(rest.Project)) // 项目api
 	router.Register(protect, new(rest.Story))   // 用户故事api
 	router.Register(protect, new(rest.Task))    // 任务
