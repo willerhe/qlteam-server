@@ -26,11 +26,14 @@ func AllowCORS() func(c *gin.Context) {
 
 // MustLogged 必须登录
 func MustLogged(c *gin.Context) {
+
 	token := c.GetHeader("authorization")
 	if token == "" {
 		c.String(401, "请先登录！")
 		c.Abort()
 		return
 	}
+	//todo 判断当前的authorization 是否合法
+
 	c.Next()
 }
