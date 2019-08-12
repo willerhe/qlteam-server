@@ -32,9 +32,10 @@ func (Login) login(c *gin.Context) {
 		return
 	}
 	// 生成jwt
-	c.Header("authorization", service.Token.General(*u))
-
-	c.JSON(200, user)
+	result := make(map[string]interface{}, 2)
+	result["authorization"] = service.Token.General(*u)
+	result["user"] = user
+	c.JSON(200, result)
 }
 
 // register 注册
