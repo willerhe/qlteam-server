@@ -34,6 +34,7 @@ func (Story) delete(c *gin.Context) {
 	c.JSON(200, s)
 }
 
+// create
 func (Story) create(c *gin.Context) {
 	s := &model.Story{}
 	c.Bind(s)
