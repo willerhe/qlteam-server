@@ -49,9 +49,9 @@ type (
 	}
 
 	// todo TOKEN1 定义token 结构
-	Token struct {
+	Claims struct {
 		jwt.StandardClaims
-		UID uint
+		UID uint `json:"uid"`
 	}
 )
 
