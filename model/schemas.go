@@ -23,9 +23,12 @@ type (
 		Name     string    `json:"name" form:"name"`
 		Describe string    `json:"describe" form:"describe"`
 		DeadLine time.Time `json:"deadLine" form:"deadLine"` // 最后期限
-		Status   string    `json:"status" form:"status"`     // 任务状态 未开始  进行中 已完成
+		Status   string    `json:"status" form:"status"`     // 任务状态 未开始preparing  进行中ongoing 已完成done
 		Box      string    `json:"box" form:"box"`           // 在哪个箱子 收件箱 今天做  下一步做 以后再做
 		Remark   string    `json:"remark" form:"remark"`     // 备注
+		Creator  uint      `json:"creator" form:"creator"`
+
+		Kind string `json:"kind" form:"kind"` // 任务类型  private 私人 project
 
 		Group string `json:"group" form:"group"` // 将相同性质的任务放在一组 任务视图使用
 

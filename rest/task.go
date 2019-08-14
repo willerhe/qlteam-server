@@ -19,7 +19,8 @@ func (Task) create(c *gin.Context) {
 	form := new(model.Task)
 	c.Bind(form)
 
-	service.Task.Create(form)
+	u, _ := c.Get("user")
+	service.Task.Create(form, u.(model.User))
 
 	c.JSON(200, form)
 }
