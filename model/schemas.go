@@ -1,6 +1,7 @@
 package model
 
 import (
+	"github.com/dgrijalva/jwt-go"
 	"github.com/willerhe/webbase/modeler"
 	"github.com/willerhe/webbase/orm"
 	"time"
@@ -47,9 +48,10 @@ type (
 		Password string `json:"-" form:"password"`
 	}
 
-	// todo 定义token 结构
+	// todo TOKEN1 定义token 结构
 	Token struct {
-		Token string
+		jwt.StandardClaims
+		UID uint
 	}
 )
 

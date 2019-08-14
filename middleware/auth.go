@@ -1,7 +1,11 @@
 package middleware
 
 import (
+	"code.qlteam.com/model"
+	"fmt"
+	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
+	"github.com/willerhe/webbase/configer"
 )
 
 // AllowCORS 跨域
@@ -27,13 +31,22 @@ func AllowCORS() func(c *gin.Context) {
 // MustLogged 必须登录
 func MustLogged(c *gin.Context) {
 
-	token := c.GetHeader("authorization")
-	if token == "" {
+	t := c.GetHeader("authorization")
+	if t == "" {
 		c.String(401, "请先登录！")
 		c.Abort()
 		return
 	}
-	//todo 判断当前的authorization 是否合法
+	//todo TOKEN3 验证token
+	token, err := jwt.ParseWithClaims(t, &model.Token{}, func(token *jwt.Token) (interface{}, error) {
+		return []byte(configer.Config.Get("token.sign").(string)), nil
+	})
+
+	if claims, ok := token.Claims.(*model.Token); ok && token.Valid {
+		fmt.Println("当前用户", claims.UID)
+	} else {
+		fmt.Println(err)
+	}
 
 	c.Next()
 }
