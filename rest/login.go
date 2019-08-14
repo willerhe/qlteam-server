@@ -14,17 +14,17 @@ type Login int
 
 // login 登录
 func (Login) login(c *gin.Context) {
-	u := &model.User{}
-	if err := c.Bind(u); err != nil {
+	form := &model.User{}
+	if err := c.Bind(form); err != nil {
 		c.String(400, "不支持的参数类型")
 		c.Abort()
 		return
 	}
 	// todo 实现remember me
 	hash := md5.New()
-	hash.Write([]byte(u.Password))
+	hash.Write([]byte(form.Password))
 
-	user := &model.User{Account: u.Account, Password: fmt.Sprintf("%X", hash.Sum(nil))}
+	user := &model.User{Account: form.Account, Password: fmt.Sprintf("%X", hash.Sum(nil))}
 	has := orm.DB.SqlSession.Where(user).First(user).RowsAffected > 0
 	if !has {
 		c.String(403, "用户名或者密码错误")
@@ -33,7 +33,7 @@ func (Login) login(c *gin.Context) {
 	}
 	// 生成jwt
 	result := make(map[string]interface{}, 2)
-	result["authorization"] = service.Token.General(*u)
+	result["authorization"] = service.Token.General(user)
 	result["user"] = user
 	c.JSON(200, result)
 }

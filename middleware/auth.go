@@ -38,12 +38,13 @@ func MustLogged(c *gin.Context) {
 		return
 	}
 	//todo TOKEN3 验证token
-	token, err := jwt.ParseWithClaims(t, &model.Token{}, func(token *jwt.Token) (interface{}, error) {
+	token, err := jwt.ParseWithClaims(t, &model.Claims{}, func(token *jwt.Token) (interface{}, error) {
 		return []byte(configer.Config.Get("token.sign").(string)), nil
 	})
 
-	if claims, ok := token.Claims.(*model.Token); ok && token.Valid {
-		fmt.Println("当前用户", claims.UID)
+	if claims, ok := token.Claims.(*model.Claims); ok && token.Valid {
+		fmt.Println("当前用户", claims.User)
+		c.Set("user", claims.User)
 	} else {
 		fmt.Println(err)
 	}

@@ -10,7 +10,7 @@ require (
 
 replace (
 	cloud.google.com/go => github.com/GoogleCloudPlatform/google-cloud-go v0.40.0
-	github.com/willerhe/webbase => /home/h/workspace/my/webbase
+	github.com/willerhe/webbase => /home/home/workspace/my/webbase
 	go.uber.org/zap => github.com/uber-go/zap v1.10.0
 	golang.org/x/crypto => github.com/golang/crypto v0.0.0-20190513172903-22d7a77e9e5f
 	golang.org/x/exp => github.com/golang/exp v0.0.0-20190510132918-efd6b22b2522

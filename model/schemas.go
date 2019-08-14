@@ -42,16 +42,16 @@ type (
 
 	// 用户
 	User struct {
-		modeler.Base
-		NickName string `json:"nickName" form:"nickName"`
-		Account  string `json:"account" form:"account"`
-		Password string `json:"-" form:"password"`
+		modeler.Base `xorm:"extends"`
+		NickName     string `json:"nickName" form:"nickName"`
+		Account      string `json:"account" form:"account"`
+		Password     string `json:"-" form:"password"`
 	}
 
 	// todo TOKEN1 定义token 结构
 	Claims struct {
 		jwt.StandardClaims
-		UID uint `json:"uid"`
+		User User
 	}
 )
 
