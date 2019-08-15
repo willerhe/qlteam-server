@@ -25,9 +25,19 @@ func (Task) create(c *gin.Context) {
 	c.JSON(200, form)
 }
 
+func (Task) update(c *gin.Context) {
+	form := new(model.Task)
+	c.Bind(form)
+
+	u, _ := c.Get("user")
+	service.Task.Update(form, u.(model.User))
+	c.JSON(200, form)
+}
+
 func (s *Task) Register(r *gin.RouterGroup) {
 	st := r.Group("")
 	st.GET("/tasks", s.list)
 	st.POST("/task", s.create)
+	st.PUT("/task/:id", s.update)
 
 }

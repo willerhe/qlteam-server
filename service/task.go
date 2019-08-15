@@ -31,8 +31,9 @@ func (task) Delete(t *model.Task) {
 }
 
 // Update 更新
-func (task) Update(t *model.Task) {
-	orm.DB.SqlSession.Omit("deleted_at").Save(t)
+func (task) Update(t *model.Task, user model.User) {
+	// todo 根据属性动态选择更新的字段
+	orm.DB.SqlSession.Model(t).Updates(*t)
 }
 
 // privateTask 私人任务
