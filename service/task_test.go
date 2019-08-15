@@ -21,5 +21,5 @@ func TestLogin_Register(test *testing.T) {
 	fmt.Println("------")
 	u := model.User{}
 	u.ID = 1
-	computedTaskName(u)
+	fmt.Println(generalTaskName(u))
 }

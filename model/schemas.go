@@ -30,7 +30,7 @@ type (
 
 		Kind string `json:"kind" form:"kind"` // 任务类型  private 私人 project
 
-		Group string `json:"group" form:"group"` // 将相同性质的任务放在一组 任务视图使用
+		Group string `json:"group" form:"group"` // 将相同性质的任务放在一组 项目的任务视图使用
 
 		Leader    uint `json:"leader" form:"leader"`       // 该项任务的领导者
 		Organizer uint `json:"organizer" form:"organizer"` // 组织者
