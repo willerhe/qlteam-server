@@ -25,6 +25,16 @@ func (task) Create(t *model.Task, user model.User) {
 	orm.DB.SqlSession.Omit("updated_at", "deleted_at").Create(t)
 }
 
+// Delete 删除item
+func (task) Delete(t *model.Task) {
+	orm.DB.SqlSession.Where(t).Delete(t)
+}
+
+// Update 更新
+func (task) Update(t *model.Task) {
+	orm.DB.SqlSession.Omit("deleted_at").Save(t)
+}
+
 // privateTask 私人任务
 func privateTask(t *model.Task, user model.User) {
 	t.Leader = user.ID
@@ -33,18 +43,32 @@ func privateTask(t *model.Task, user model.User) {
 	// 190815001 2019年8月15日的第一项任务
 	t.Name = generalTaskName(user)
 	t.Kind = "default"
-
-	//t.DeadLine = generalDeadline(t.box)
+	// todo deadline 生成后  后期怎么续期
+	t.DeadLine = generalDeadline(t.Kind)
 
 }
 
+//inbox
+//todo
+//nextStep
+//later
+
 // 截止日计算
-//func generalDeadline(s string) time.Time {
-//	switch s {
-//	case "":
-//
-//	}
-//}
+func generalDeadline(s string) time.Time {
+	var deadline time.Time
+	switch s {
+	case "todo":
+		deadline = time.Now().AddDate(0, 0, 1)
+	case "nextStep":
+		deadline = time.Now().AddDate(0, 0, 3)
+	case "later":
+		deadline = time.Now().AddDate(0, 0, 7)
+	case "inbox":
+		deadline = time.Now().AddDate(0, 0, 1)
+
+	}
+	return deadline
+}
 
 // computedTaskName 根据当前的时间计算今天的任务数字
 func generalTaskName(user model.User) string {
