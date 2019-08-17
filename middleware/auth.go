@@ -33,7 +33,7 @@ func MustLogged(c *gin.Context) {
 
 	t := c.GetHeader("authorization")
 	if t == "" {
-		c.String(401, "请先登录！")
+		c.String(401, "请登录后再进行操作！")
 		c.Abort()
 		return
 	}
@@ -46,8 +46,10 @@ func MustLogged(c *gin.Context) {
 		fmt.Println("当前用户", claims.User)
 		c.Set("user", claims.User)
 	} else {
+		c.String(401, "登录信息过期请重新登录")
+		c.Abort()
 		fmt.Println(err)
+		return
 	}
-
 	c.Next()
 }

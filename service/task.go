@@ -4,6 +4,7 @@ import (
 	"code.qlteam.com/model"
 	"fmt"
 	"github.com/willerhe/webbase/orm"
+	"log"
 	"time"
 )
 
@@ -11,29 +12,48 @@ var Task task
 
 type task int
 
-func (task) List(ts *[]model.Task) {
-	orm.DB.SqlSession.Find(ts)
+// List 查询所有的自己的task
+func (task) List(form *model.Task, ts *[]model.Task) bool {
+	if err := orm.DB.SqlSession.Where(form).Find(ts).Error; err != nil {
+		log.Println(err)
+		return false
+	}
+	// 查询成功
+	return true
 }
 
-func (task) Create(t *model.Task, user model.User) {
+// Create create  a new task
+func (task) Create(t *model.Task, user model.User) bool {
 	t.Creator = user.ID
 	t.Status = "preparing"
-
 	if t.Kind == "private" {
 		privateTask(t, user)
 	}
-	orm.DB.SqlSession.Omit("updated_at", "deleted_at").Create(t)
+	if err := orm.DB.SqlSession.Omit("updated_at", "deleted_at").Create(t).Error; err != nil {
+		log.Println(err)
+		return false
+	}
+	// 创建成功
+	return true
 }
 
 // Delete 删除item
-func (task) Delete(t *model.Task) {
-	orm.DB.SqlSession.Where(t).Delete(t)
+func (task) Delete(t *model.Task) bool {
+	if err := orm.DB.SqlSession.Where(t).Delete(t).Error; err != nil {
+		log.Println(err)
+		return false
+	}
+	return true
 }
 
 // Update 更新
-func (task) Update(t *model.Task, user model.User) {
+func (task) Update(t *model.Task, user model.User) bool {
 	// todo 根据属性动态选择更新的字段
-	orm.DB.SqlSession.Model(t).Updates(*t)
+	if err := orm.DB.SqlSession.Model(t).Updates(*t).Error; err != nil {
+		log.Println(err)
+		return false
+	}
+	return true
 }
 
 // privateTask 私人任务
