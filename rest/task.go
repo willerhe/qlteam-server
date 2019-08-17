@@ -5,6 +5,7 @@ import (
 	"code.qlteam.com/service"
 	"github.com/gin-gonic/gin"
 	"log"
+	"strconv"
 )
 
 type Task int
@@ -63,10 +64,33 @@ func (Task) update(c *gin.Context) {
 	c.JSON(200, form)
 }
 
+// delete delete a task
+func (Task) delete(c *gin.Context) {
+	form := new(model.Task)
+
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		log.Println(err)
+		c.String(400, "请检查更新参数")
+		c.Abort()
+		return
+	}
+	form.ID = uint(id)
+
+	u, _ := c.Get("user")
+	if !service.Task.Delete(form, u.(model.User)) {
+		c.String(500, "更新task失败")
+		c.Abort()
+		return
+	}
+	c.JSON(200, form)
+}
+
 // Register register a group of router to root router
 func (s *Task) Register(r *gin.RouterGroup) {
 	st := r.Group("")
 	st.GET("/tasks", s.list)
 	st.POST("/task", s.create)
 	st.PUT("/task/:id", s.update)
+	st.DELETE("/task/:id", s.delete)
 }

@@ -38,7 +38,7 @@ func (task) Create(t *model.Task, user model.User) bool {
 }
 
 // Delete 删除item
-func (task) Delete(t *model.Task) bool {
+func (task) Delete(t *model.Task, user model.User) bool {
 	if err := orm.DB.SqlSession.Where(t).Delete(t).Error; err != nil {
 		log.Println(err)
 		return false
