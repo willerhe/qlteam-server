@@ -13,6 +13,12 @@ type Task int
 // list 查询tasks
 func (Task) list(c *gin.Context) {
 	form := &model.Task{}
+	if err := c.Bind(form); err != nil {
+		log.Println(err)
+		c.String(400, "参数错误")
+		c.Abort()
+		return
+	}
 	u, _ := c.Get("user")
 	form.Leader = u.(model.User).ID
 

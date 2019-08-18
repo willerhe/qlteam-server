@@ -32,6 +32,8 @@ type (
 
 		Group string `json:"group" form:"group"` // 将相同性质的任务放在一组 项目的任务视图使用
 
+		OnFile bool `json:"onFile" form:"onFile"` // 是否已经归档
+
 		Leader    uint `json:"leader" form:"leader"`       // 该项任务的领导者
 		Organizer uint `json:"organizer" form:"organizer"` // 组织者
 	}

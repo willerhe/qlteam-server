@@ -14,7 +14,10 @@ type task int
 
 // List 查询所有的自己的task
 func (task) List(form *model.Task, ts *[]model.Task) bool {
-	if err := orm.DB.SqlSession.Where(form).Find(ts).Error; err != nil {
+	form.DeletedAt = nil
+	// todo golang 的bool的空值和默认值都是false, orm框架查询的时候会略过
+	//  怎么把bool int 的默认值查询开启
+	if err := orm.DB.SqlSession.Where(form).Where("on_file = ?", form.OnFile).Find(ts).Error; err != nil {
 		log.Println(err)
 		return false
 	}
