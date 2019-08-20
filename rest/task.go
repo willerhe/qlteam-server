@@ -43,7 +43,7 @@ func (Task) create(c *gin.Context) {
 	}
 	u, _ := c.Get("user")
 	if !service.Task.Create(form, u.(model.User)) {
-		c.String(500, "常见新任务失败")
+		c.String(500, "创建新任务失败")
 		c.Abort()
 		return
 	}
