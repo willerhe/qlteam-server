@@ -32,7 +32,7 @@ func (task) Create(t *model.Task, user model.User) bool {
 	if t.Kind == "private" {
 		privateTask(t, user)
 	}
-	if err := orm.DB.SqlSession.Omit("updated_at", "deleted_at").Create(t).Error; err != nil {
+	if err := orm.DB.SqlSession.Omit("updated_at", "deleted_at", "dead_line").Create(t).Error; err != nil {
 		log.Println(err)
 		return false
 	}

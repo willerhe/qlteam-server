@@ -18,7 +18,7 @@ func (token) General(user *model.User) string {
 	sign := []byte(configer.Config.Get("token.sign").(string))
 	claims := new(model.Claims)
 	// 过期时间 1小时
-	claims.ExpiresAt = time.Now().Add(time.Hour * time.Duration(1)).Unix()
+	claims.ExpiresAt = time.Now().Add(time.Hour * time.Duration(72)).Unix()
 	claims.IssuedAt = time.Now().Unix()
 	claims.User = *user
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
