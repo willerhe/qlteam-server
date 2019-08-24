@@ -30,5 +30,6 @@ func main() {
 	router.Register(protect, new(rest.Project)) // 项目api
 	router.Register(protect, new(rest.Story))   // 用户故事api
 	router.Register(protect, new(rest.Task))    // 任务
+	router.Register(protect, new(rest.User))    // 用户
 
 }
