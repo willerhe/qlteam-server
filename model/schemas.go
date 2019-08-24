@@ -26,7 +26,6 @@ type (
 		Status   string    `json:"status" form:"status"`     // 任务状态 未开始preparing  进行中ongoing 已完成done
 		Box      string    `json:"box" form:"box"`           // 在哪个箱子 收件箱 今天做  下一步做 以后再做
 		Remark   string    `json:"remark" form:"remark"`     // 备注
-		Creator  uint      `json:"creator" form:"creator"`
 
 		Kind string `json:"kind" form:"kind"` // 任务类型  private 私人 project
 
@@ -36,6 +35,9 @@ type (
 
 		Leader    uint `json:"leader" form:"leader"`       // 该项任务的领导者
 		Organizer uint `json:"organizer" form:"organizer"` // 组织者
+
+		ProjectId uint `json:"projectId" form:"projectId"` // 所属项目
+		Creator   uint `json:"creator" form:"creator"`     // 创建者
 	}
 
 	// 用户故事简单到没有名称 直接是一段对开发工作和用户价值对应关系的描述
