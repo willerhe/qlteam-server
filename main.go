@@ -31,5 +31,6 @@ func main() {
 	router.Register(protect, new(rest.Story))   // 用户故事api
 	router.Register(protect, new(rest.Task))    // 任务
 	router.Register(protect, new(rest.User))    // 用户
+	router.Register(root, new(rest.Ws))         // websocket
 
 }

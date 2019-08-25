@@ -6,9 +6,11 @@ require (
 	github.com/centrifugal/centrifuge-go v0.2.3 // indirect
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gin-gonic/gin v1.3.0
-	github.com/gorilla/websocket v1.4.0 // indirect
+	github.com/gorilla/websocket v1.4.1
 	github.com/jpillora/backoff v0.0.0-20180909062703-3050d21c67d7 // indirect
 	github.com/willerhe/webbase v0.0.0-20190625231052-22029a293ec2
+	go.uber.org/zap v1.10.0
+	golang.org/x/net v0.0.0-20190603091049-60506f45cf65
 )
 
 replace (
