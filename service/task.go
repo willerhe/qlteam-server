@@ -1,6 +1,7 @@
 package service
 
 import (
+	"code.qlteam.com/dict"
 	"code.qlteam.com/model"
 	"fmt"
 	"github.com/willerhe/webbase/orm"
@@ -28,7 +29,7 @@ func (task) List(form *model.Task, ts *[]model.Task) bool {
 // Create create  a new task
 func (task) Create(t *model.Task, user model.User) bool {
 	t.Creator = user.ID
-	t.Status = "preparing"
+	t.Status = dict.ProjectStatus_Preparing
 	if t.Kind == "private" {
 		privateTask(t, user)
 	}
@@ -81,13 +82,13 @@ func privateTask(t *model.Task, user model.User) {
 func generalDeadline(s string) time.Time {
 	var deadline time.Time
 	switch s {
-	case "todo":
+	case dict.Box_TODO:
 		deadline = time.Now().AddDate(0, 0, 1)
-	case "nextStep":
+	case dict.BOX_NextStep:
 		deadline = time.Now().AddDate(0, 0, 3)
-	case "later":
+	case dict.Box_Later:
 		deadline = time.Now().AddDate(0, 0, 7)
-	case "inbox":
+	case dict.Box_Inbox:
 		deadline = time.Now().AddDate(0, 0, 1)
 
 	}

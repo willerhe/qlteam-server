@@ -33,7 +33,7 @@ type (
 
 		OnFile bool `json:"onFile" form:"onFile"` // 是否已经归档
 
-		Leader    uint `json:"leader" form:"leader"`       // 该项任务的领导者
+		Leader    uint `json:"leader" form:"leader"`       // 该项任务的领导者 (负责人)
 		Organizer uint `json:"organizer" form:"organizer"` // 组织者
 
 		ProjectId uint `json:"projectId" form:"projectId"` // 所属项目
