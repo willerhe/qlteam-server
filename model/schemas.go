@@ -4,6 +4,7 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/willerhe/webbase/modeler"
 	"github.com/willerhe/webbase/orm"
+	"log"
 	"time"
 )
 
@@ -34,10 +35,12 @@ type (
 		OnFile bool `json:"onFile" form:"onFile"` // 是否已经归档
 
 		Leader    uint `json:"leader" form:"leader"`       // 该项任务的领导者 (负责人)
-		Organizer uint `json:"organizer" form:"organizer"` // 组织者
+		Organizer uint `json:"organizer" form:"organizer"` // 组织者 (谁分配的)
 
 		ProjectId uint `json:"projectId" form:"projectId"` // 所属项目
 		Creator   uint `json:"creator" form:"creator"`     // 创建者
+
+		//Involvement []uint // 参与者
 	}
 
 	// 用户故事简单到没有名称 直接是一段对开发工作和用户价值对应关系的描述
@@ -64,5 +67,9 @@ type (
 
 func Sync() {
 	sync := orm.NewService()
-	sync.SqlSession.AutoMigrate(new(Project), new(Task), new(Story), new(User))
+	log.Println("数据库迁移")
+	db := sync.SqlSession.AutoMigrate(new(Project), new(Task), new(Story), new(User))
+	if db.Error != nil {
+		log.Fatal(db.Error)
+	}
 }

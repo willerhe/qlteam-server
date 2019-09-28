@@ -32,6 +32,50 @@ func (Task) list(c *gin.Context) {
 	c.JSON(200, tasks)
 }
 
+// distribution 查询我分配的项目
+func (Task) distribution(c *gin.Context) {
+	form := &model.Task{}
+	if err := c.Bind(form); err != nil {
+		log.Println(err)
+		c.String(400, "参数错误")
+		c.Abort()
+		return
+	}
+	u, _ := c.Get("user")
+	form.Organizer = u.(model.User).ID
+
+	tasks := &[]model.Task{}
+	if !service.Task.List(form, tasks) {
+		c.String(500, "查询失败")
+		c.Abort()
+		return
+	}
+
+	c.JSON(200, tasks)
+}
+
+// distribution 查询我分配的项目
+func (Task) establish(c *gin.Context) {
+	form := &model.Task{}
+	if err := c.Bind(form); err != nil {
+		log.Println(err)
+		c.String(400, "参数错误")
+		c.Abort()
+		return
+	}
+	u, _ := c.Get("user")
+	form.Creator = u.(model.User).ID
+
+	tasks := &[]model.Task{}
+	if !service.Task.List(form, tasks) {
+		c.String(500, "查询失败")
+		c.Abort()
+		return
+	}
+
+	c.JSON(200, tasks)
+}
+
 // create 创建新task
 func (Task) create(c *gin.Context) {
 	form := new(model.Task)
@@ -96,6 +140,8 @@ func (Task) delete(c *gin.Context) {
 func (s *Task) Register(r *gin.RouterGroup) {
 	st := r.Group("")
 	st.GET("/tasks", s.list)
+	st.GET("/tasks/distribution", s.distribution)
+	st.GET("/tasks/establish", s.establish)
 	st.POST("/task", s.create)
 	st.PUT("/task/:id", s.update)
 	st.DELETE("/task/:id", s.delete)
